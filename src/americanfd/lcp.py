@@ -128,8 +128,11 @@ def optimal_omega(alpha: float, size: int) -> float:
     The Jacobi iteration matrix has spectral radius
     mu = 2 alpha cos(pi / (size + 1)) / (1 + 2 alpha), and for this consistently
     ordered matrix Young's formula gives omega* = 2 / (1 + sqrt(1 - mu^2)).
-    With the obstacle active PSOR is no longer exactly SOR, but omega* stays an
-    excellent choice in practice (see scripts/psor_omega.py).
+    With the obstacle active and a warm start from the previous time level PSOR
+    is no longer exactly SOR: for moderate lam a fixed omega of 1.2-1.4 can need
+    fewer sweeps, but omega* is the robust default - for large lam it is close
+    to the best fixed value, while omega = 1 needs several times more sweeps
+    (see scripts/psor_omega.py and results/psor_omega.md).
     """
     mu = 2.0 * alpha * np.cos(np.pi / (size + 1)) / (1.0 + 2.0 * alpha)
     return float(2.0 / (1.0 + np.sqrt(1.0 - mu * mu)))
