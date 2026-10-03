@@ -1,0 +1,37 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "americanfd"
+version = "0.1.0"
+description = "American option pricing with Crank–Nicolson finite differences and a projected SOR / Brennan–Schwartz LCP solver"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Tagir Iskhakov" }]
+keywords = ["american option", "finite differences", "crank-nicolson", "psor", "black-scholes", "free boundary"]
+dependencies = [
+    "numpy>=1.24",
+    "scipy>=1.10",
+]
+
+[project.optional-dependencies]
+fast = ["numba>=0.59"]          # JIT-compiles the PSOR / Brennan–Schwartz inner loops
+plots = ["matplotlib>=3.7"]     # scripts/ that build figures and tables
+dev = ["pytest>=7", "ruff>=0.4", "matplotlib>=3.7"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "NPY"]
+ignore = ["E741"]  # single-letter names like l are fine in numerics
