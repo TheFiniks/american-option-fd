@@ -145,3 +145,27 @@ def test_input_validation():
         solve_fd(EX_1_6, 100, 100, lcp="gauss")
     with pytest.raises(ValueError):
         solve_fd(EX_1_6, 100, 100, theta=1.5)
+
+
+def test_free_boundary_ringing_needs_moderate_lambda():
+    # Rannacher fixes the strike kink; the moving free boundary still makes plain CN
+    # ring when lam = dtau/dx^2 is large.  At lam ~ 2 Gamma is as smooth as implicit.
+    opt = Option(K=100.0, T=0.25, r=0.05, sigma=0.2, kind="put", style="american")
+
+    def roughness(n, theta=0.5):
+        res = solve_fd(opt, 800, n, theta=theta, rannacher=2 if theta == 0.5 else 0,
+                       lcp="brennan-schwartz")  # fmt: skip
+        mask = (res.S > 1.01 * res.exercise_boundary_t0) & (res.S < 97.0)
+        return np.abs(np.diff(res.gamma[mask], 2)).max()
+
+    assert roughness(25) > 1e-2  # lam ~ 32: visible ringing
+    assert roughness(400) < 2 * roughness(400, theta=1.0)  # lam ~ 2: smooth
+
+
+def test_store_surface():
+    res = solve_fd(EX_1_6, 100, 50, store_surface=True)
+    # initial level + 4 implicit half-steps (2 Rannacher steps) + 48 regular CN steps
+    assert res.surface.shape == (1 + 4 + 48, 101)
+    assert res.surface_t[0] == pytest.approx(EX_1_6.T) and res.surface_t[-1] == pytest.approx(0)
+    np.testing.assert_allclose(res.surface[0], EX_1_6.payoff(res.S))
+    np.testing.assert_allclose(res.surface[-1], res.V)
