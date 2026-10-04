@@ -1,6 +1,6 @@
 # American options by finite differences
 
-[![tests](https://github.com/OWNER/american-option-fd/actions/workflows/tests.yml/badge.svg)](https://github.com/OWNER/american-option-fd/actions/workflows/tests.yml)
+[![tests](https://github.com/TheFiniks/american-option-fd/actions/workflows/tests.yml/badge.svg)](https://github.com/TheFiniks/american-option-fd/actions/workflows/tests.yml)
 
 Numerical solution of the Black–Scholes equation with the **Crank–Nicolson** scheme;
 **early exercise** of an American option treated as a **free-boundary problem**, written as
@@ -184,7 +184,7 @@ for large λ, and ω = 1 (Gauss–Seidel, Seydel's suggestion) is the slowest ev
 ## Usage
 
 ```bash
-git clone https://github.com/OWNER/american-option-fd.git
+git clone https://github.com/TheFiniks/american-option-fd.git
 cd american-option-fd
 python -m venv .venv && source .venv/bin/activate   # Windows: .venv\Scripts\activate
 pip install -e ".[dev,fast]"                         # fast = numba JIT for the PSOR loop
