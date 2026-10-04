@@ -32,8 +32,7 @@ Greeks **Δ, Γ, Θ** computed on the grid.
 With a continuous dividend yield δ the option value $V(S,t)$ solves
 
 $$
-\frac{\partial V}{\partial t} + \tfrac12\sigma^2 S^2 \frac{\partial^2 V}{\partial S^2}
-+ (r-\delta) S\frac{\partial V}{\partial S} - rV = 0 .
+\frac{\partial V}{\partial t} + \tfrac12\sigma^2 S^2 \frac{\partial^2 V}{\partial S^2}+ (r-\delta) S\frac{\partial V}{\partial S} - rV = 0 .
 $$
 
 Following Seydel (§4.1) we substitute
@@ -52,8 +51,7 @@ The uniform $x$-grid is a geometric grid in $S$, and the strike is always a grid
 On a uniform grid $x_i$, $\tau_\nu$ with $\lambda = \Delta\tau/\Delta x^2$:
 
 $$
-(1+2\lambda\theta)\,w_i^{\nu+1} - \lambda\theta\,(w_{i-1}^{\nu+1}+w_{i+1}^{\nu+1})
-= w_i^{\nu} + \lambda(1-\theta)\,(w_{i-1}^{\nu}-2w_i^{\nu}+w_{i+1}^{\nu}).
+(1+2\lambda\theta)\,w_i^{\nu+1} - \lambda\theta\,(w_{i-1}^{\nu+1}+w_{i+1}^{\nu+1}) = w_i^{\nu} + \lambda(1-\theta)\,(w_{i-1}^{\nu}-2w_i^{\nu}+w_{i+1}^{\nu}).
 $$
 
 θ = ½ is Crank–Nicolson (second order in Δx and Δτ, unconditionally stable), θ = 1 fully
